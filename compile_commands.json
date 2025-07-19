@@ -1,0 +1,47 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-std=c2x",
+      "-I",
+      "include",
+      "-o",
+      "SRS.exe",
+      "src/input.c"
+    ],
+    "directory": "/home/kharl/Desktop/C/Student_Record_System",
+    "file": "/home/kharl/Desktop/C/Student_Record_System/src/input.c",
+    "output": "/home/kharl/Desktop/C/Student_Record_System/SRS.exe"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-std=c2x",
+      "-I",
+      "include",
+      "-o",
+      "SRS.exe",
+      "src/main.c"
+    ],
+    "directory": "/home/kharl/Desktop/C/Student_Record_System",
+    "file": "/home/kharl/Desktop/C/Student_Record_System/src/main.c",
+    "output": "/home/kharl/Desktop/C/Student_Record_System/SRS.exe"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-std=c2x",
+      "-I",
+      "include",
+      "-o",
+      "SRS.exe",
+      "src/student.c"
+    ],
+    "directory": "/home/kharl/Desktop/C/Student_Record_System",
+    "file": "/home/kharl/Desktop/C/Student_Record_System/src/student.c",
+    "output": "/home/kharl/Desktop/C/Student_Record_System/SRS.exe"
+  }
+]
