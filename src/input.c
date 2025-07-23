@@ -25,6 +25,13 @@ int get_input_int(const char* prompt){
     return num;
 }
 
+long get_input_long(const char* prompt){
+    long num;
+    set_input(&num, "%ld", "number", prompt);
+
+    return num;
+}
+
 double get_input_double(const char* prompt){
     double num;
     set_input(&num, "%lf", "decimal number", prompt);
@@ -32,9 +39,9 @@ double get_input_double(const char* prompt){
     return num;
 }
 
-char get_input_char(char* prompt){
+char get_input_char(const char* prompt){
     char input;
-    set_input(&input, "%c", "character", prompt);
+    set_input(&input, " %c", "character", prompt);
 
     return input;
 }

@@ -2,6 +2,7 @@
 #include "student.h"
 #include "input.h"
 #include "add.h"
+#include "find.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,10 +27,12 @@ int main(){
     if(is_allocated(pFile)){
         sys_start(pFile);
         fclose(pFile);
+
         return 0;
     }
 
     printf("The %s cannot be open! The system will not work.", DATA_FILE_PATH);
+
     return 1;
 }
 
@@ -55,6 +58,7 @@ bool isRunning(FILE* pFile){
                 student_add(pFile);
                 return true;
             case FIND:
+                student_find(pFile);
                 return true;
             case UPDATE:
                 return true;

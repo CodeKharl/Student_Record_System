@@ -7,22 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static Student* get_student(unsigned int new_id);
-static int new_std_id(FILE* pFile);
-static bool set_last_std(FILE* pFile, Student* pStd);
+static Student* get_student(FILE* pFile);
+static unsigned long new_std_id(FILE* pFile);
 static bool is_confirm(Student* pStudent);
 static void write_student(FILE* pFile, Student* pStudent);
 
 void student_add(FILE* pFile){
-    if(pFile == NULL){
-        puts("Data file failed to open!");
-        return;
-    }
-
     puts("Add Student");
 
-    int new_id = new_std_id(pFile);
-    Student* pStudent = get_student(new_id);
+    Student* pStudent = get_student(pFile);
 
     if(pStudent && is_confirm(pStudent)){
         write_student(pFile, pStudent);
@@ -31,35 +24,35 @@ void student_add(FILE* pFile){
     delete_student(pStudent);
 }
 
-static Student* get_student(unsigned int new_id){
+static Student* get_student(FILE* pFile){
     Student* pStudent = new_student();
     if(!is_allocated(pStudent)) return NULL;
     
-    pStudent->id = new_id;
     pStudent->name = input_name(MAX_NAME_SIZE);
     pStudent->age = input_age();
     pStudent->sex = input_sex();
     pStudent->address = input_address(MAX_ADDRESS_SIZE);
     pStudent->contact_number = input_contact_num(MAX_CONTACT_NUM_SIZE);
+    pStudent->id = new_std_id(pFile);
 
     return pStudent;
 }
 
-static int new_std_id(FILE* pFile){
-    Student pLast_std;
+static unsigned long new_std_id(FILE* pFile){
+    puts("Creating new ID...");
 
-    return set_last_std(pFile, &pLast_std) ? pLast_std.id + 1 : 1;
-}
+    Student* pLast_std = get_last_student(pFile);
 
-static bool set_last_std(FILE* pFile, Student* pStd){
-    fseek(pFile, 0, SEEK_END);
-    if(ftell(pFile) == 0){
-        return false;
+    if(pLast_std){
+        unsigned long id = pLast_std->id + 1;
+        free(pLast_std);
+
+        return id;
     }
 
-    fseek(pFile, -sizeof(Student), SEEK_END);
+    puts("First student to record.");
 
-    return fread(pStd, sizeof(Student), 1, pFile) == 1;
+    return 1;
 }
 
 static bool is_confirm(Student* pStudent){

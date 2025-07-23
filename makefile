@@ -24,5 +24,5 @@ $(BUILDIR) $(BINDIR):
 .PHONY: clean
 
 clean:
-	rm -rf $(BUILDIR) $(BINDIR)
+	rm -rf $(BUILDIR) $(BINDIR) data/student.dat
 	@echo "Clean successfully"

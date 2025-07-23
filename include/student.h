@@ -13,7 +13,7 @@ typedef enum{
 } Sex;
 
 typedef struct{
-    unsigned int id;
+    unsigned long id;
     unsigned int age;
     Sex sex;
     char* name;
@@ -24,8 +24,11 @@ typedef struct{
 Student* new_student();
 void delete_student(Student* p);
 
+Student* get_last_student(FILE* pFile);
+
 char* student_str(Student* pStudent);
 
+unsigned long input_id();
 char* input_name(const size_t size);
 unsigned int input_age();
 Sex input_sex();

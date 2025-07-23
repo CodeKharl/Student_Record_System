@@ -7,6 +7,8 @@
 
 const static char* student_str_format = "%d - %s - %d - %c - %s - %s";
 
+bool set_last_student(Student* pStudent, const size_t std_size, FILE* pFile);
+
 Student* new_student(){
     return calloc(1, sizeof(Student));
 }
@@ -21,18 +23,48 @@ void delete_student(Student* p){
     free(p);
 }
 
+Student* get_last_student(FILE* pFile){
+    size_t std_size = sizeof(Student);
+    Student* pStudent = malloc(std_size);
+
+    if(!is_allocated(pStudent)) return NULL;
+
+    if(set_last_student(pStudent, std_size, pFile)){
+        puts("Last student found!");
+
+        return pStudent;
+    }
+
+    free(pStudent);
+
+    return NULL;
+}
+
+bool set_last_student(Student* pStudent, const size_t std_size, FILE* pFile){
+    fseek(pFile, 0, SEEK_END);
+
+    if(ftell(pFile) == 0){
+        puts("File is empty.");
+        return false;
+    }
+
+    fseek(pFile, -((long) std_size), SEEK_END);
+
+    return fread(pStudent, std_size, 1, pFile) == 1;
+}
+
 static int student_snprintf(char* buffer, size_t size, Student* pStudent){
-     return snprintf(
-            buffer, 
-            size,
-            student_str_format,
-            pStudent->id, 
-            pStudent->name ? pStudent->name : "(none)", 
-            pStudent->age, 
-            pStudent->sex,
-            pStudent->address ? pStudent->address : "(none)", 
-            pStudent->contact_number ? pStudent->contact_number : "(none)"
-     );
+    return snprintf(
+        buffer, 
+        size,
+        student_str_format,
+        pStudent->id, 
+        pStudent->name ? pStudent->name : "(none)", 
+        pStudent->age, 
+        pStudent->sex,
+        pStudent->address ? pStudent->address : "(none)", 
+        pStudent->contact_number ? pStudent->contact_number : "(none)"
+    );
 }
 
 char* student_str(Student* pStudent){
@@ -46,6 +78,16 @@ char* student_str(Student* pStudent){
     }
 
     return NULL;
+}
+
+unsigned long input_id(){
+    long id;
+
+    while((id = get_input_long("Enter student id : ")) < 0){
+        puts("ID number too low!");
+    }
+
+    return id;
 }
 
 char* input_name(const size_t size){
