@@ -1,8 +1,11 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-void set_input(void* con, char* pattern, char* prompt);
-void input_int(int* pInt, char* prompt);
-void input_double(double* pDouble, char* prompt);
+#include <stdio.h>
+
+int get_input_int(const char* prompt);
+double get_input_double(const char* prompt);
+char* get_input_str(const size_t size, const char* prompt);
+char get_input_char(char* prompt);
 
 #endif

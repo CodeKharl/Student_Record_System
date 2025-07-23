@@ -1,10 +1,13 @@
-
+#include "memory_util.h"
 #include "student.h"
 #include "input.h"
+#include "add.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define DATA_FILE_PATH "data/student.dat"
 
 typedef enum{
     ADD = 1,
@@ -14,47 +17,42 @@ typedef enum{
     EXIT
 }Menu;
 
-bool isRunning();
+void sys_start(FILE* pFile);
+bool isRunning(FILE* pFile);
 
 int main(){
-    /* do{
-        printf("--> Student Record System <--\n");
+    FILE* pFile = fopen(DATA_FILE_PATH, "ab+");
+
+    if(is_allocated(pFile)){
+        sys_start(pFile);
+        fclose(pFile);
+        return 0;
+    }
+
+    printf("The %s cannot be open! The system will not work.", DATA_FILE_PATH);
+    return 1;
+}
+
+void sys_start(FILE* pFile){
+    do{
+        puts("--> Student Record System <--");
         printf("%d. Add Student\n", ADD);
         printf("%d. Find Student\n", FIND);
         printf("%d. Update Student\n", UPDATE);
         printf("%d. Drop Student\n", DROP);
         printf("%d. Exit\n", EXIT);
-    }while(isRunning());
-
-    */
-
-    Student* std = malloc(sizeof(Student));
-    std->id = 24211;
-    std->name = "Kharl Denzell";
-    std->age = 19;
-    std->sex = MALE;
-    std->address = "Holy Friday, Mallig, Isabela";
-    std->phone_number = "09605326220";
-
-    char* buffer = malloc(256);
-
-    student_str(buffer, 256, std);
-    printf("%s\n", buffer);
-
-    free(buffer);
-    free(std);
-
-    return 0;
+    }while(isRunning(pFile)); 
 }
 
-bool isRunning(){
+bool isRunning(FILE* pFile){
     int choice;
 
     while(1){
-        input_int(&choice, "Enter your choice : ");
+        choice = get_input_int("Enter your choice : ");
 
         switch(choice){
             case ADD:
+                student_add(pFile);
                 return true;
             case FIND:
                 return true;

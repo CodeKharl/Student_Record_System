@@ -1,16 +1,10 @@
+#include "memory_util.h"
+
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void set_input(void* con, char* pattern, char* prompt);
-
-void input_int(int* pInt, char* prompt){
-    set_input(pInt, "%d", prompt);
-}
-
-void input_double(double* pDouble, char* prompt){
-    set_input(pDouble, "%lf", prompt);
-}
-
-void set_input(void* con, char* pattern, char* prompt){
+static void set_input(void* con, const char* pattern, char* val_type, const char* prompt){
     while(1){
         printf("%s", prompt);
 
@@ -19,7 +13,48 @@ void set_input(void* con, char* pattern, char* prompt){
             break;
         }
 
-        printf("Numbers can only be input on this section!\n");
+        printf("Invalid input! (must be a %s).\n", val_type);
         while(getchar() != '\n');
+    }
+}
+
+int get_input_int(const char* prompt){
+    int num;
+    set_input(&num, "%d", "number", prompt);
+
+    return num;
+}
+
+double get_input_double(const char* prompt){
+    double num;
+    set_input(&num, "%lf", "decimal number", prompt);
+    
+    return num;
+}
+
+char get_input_char(char* prompt){
+    char input;
+    set_input(&input, "%c", "character", prompt);
+
+    return input;
+}
+
+char* get_input_str(const size_t size, const char* prompt){
+    char* pStr = malloc(size);
+
+    if(!is_allocated(pStr)){
+        return NULL;
+    }
+
+    while(1){
+        printf("%s", prompt);
+
+        if(fgets(pStr, size, stdin) != NULL){
+            *(pStr + strcspn(pStr, "\n")) = '\0'; 
+
+            if(strlen(pStr) > 0) return pStr;
+        }
+
+        puts("Theres no input!");
     }
 }
