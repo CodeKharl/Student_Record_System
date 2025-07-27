@@ -19,10 +19,10 @@ $(BUILDIR)/%.o: $(SRCDIR)/%.c | $(BUILDIR)
 
 $(BUILDIR) $(BINDIR):
 	clear
-	mkdir -p $@
+	mkdir -p $@ data
 
 .PHONY: clean
 
 clean:
-	rm -rf $(BUILDIR) $(BINDIR) data/student.dat
+	rm -rf $(BUILDIR) $(BINDIR) data
 	@echo "Clean successfully"

@@ -21,12 +21,22 @@ typedef struct{
     char* contact_number;
 } Student;
 
+typedef struct{
+    unsigned long id;
+    long offset;
+} StudentIndex;
+
+extern const char* STUDENT_LABELED_FORMAT;
+extern const char* STUDENT_DEFAULT_FORMAT;
+
 Student* new_student();
 void delete_student(Student* p);
 
-Student* get_last_student(FILE* pFile);
+bool set_stdIndex_by_id(StudentIndex* stdIndex, const unsigned long id, FILE* pFile_index); 
+bool set_last_stdIndex(StudentIndex* stdIndex, FILE* pFile_index);
+bool set_std_by_index(Student* pStudent, const StudentIndex* pStd_index, FILE* pFile); 
 
-char* student_str(Student* pStudent);
+bool set_student_str(char* buffer, Student* pStudent, const char* format);
 
 unsigned long input_id();
 char* input_name(const size_t size);

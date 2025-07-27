@@ -5,7 +5,7 @@
 
 bool is_allocated(void* p){
     if(!p){
-        printf("Memory allocation failed");
+        puts("Memory allocation failed");
 
         return false;
     }
