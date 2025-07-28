@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c2x -Wall -Werror -I include
+CFLAGS = -std=c2x -Wall -Werror -Wno-unused-function -I include
 
 SRCDIR = src
 BUILDIR = build

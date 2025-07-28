@@ -1,6 +1,7 @@
 #include "student.h"
 #include "input.h"
 #include "memory_util.h"
+#include "file_util.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,8 +73,7 @@ bool set_last_stdIndex(StudentIndex* pStd_index, FILE* pFile_index){
 static bool set_ptr_stdIndex(StudentIndex* pStd_index, const long offset, const int whence, FILE* pFile_index){
     fseek(pFile_index, 0, SEEK_END);
 
-    if(ftell(pFile_index) == 0){
-        puts("Index file is empty.");
+    if(is_file_empty(pFile_index, DATA_FILE_INDEX_PATH)){
         return false;
     }
 
@@ -96,8 +96,7 @@ bool set_std_by_index(Student* pStudent, const StudentIndex* pStd_index, FILE* p
 static bool set_ptr_student(Student* pStudent, const StudentIndex* pStd_index, FILE* pFile){
     fseek(pFile, 0, SEEK_END);
 
-    if(ftell(pFile) == 0){
-        puts("Student file is empty.");
+    if(is_file_empty(pFile, DATA_FILE_PATH)){
         return false;
     }
 

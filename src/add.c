@@ -17,16 +17,16 @@ static void write_student(FILE* pFile, FILE* pFile_index, Student* pStudent);
 static bool write_student_index(StudentIndex* pStdIndex, FILE* pFile_index);
 static bool fwrite_chars(char* p, FILE* pFile);
 
-void student_add(FILE* pFile, FILE* pFile_index){
+void student_add(FILE** pFile, FILE** pFile_index){
     puts("\nAdd Student");
 
     Student* pStudent = new_student();
     if(!is_allocated(pStudent)) return;
 
-    set_input_student(pStudent, pFile, pFile_index);
+    set_input_student(pStudent, *pFile, *pFile_index);
 
     if(is_confirm(pStudent)){
-        write_student(pFile, pFile_index, pStudent);
+        write_student(*pFile, *pFile_index, pStudent);
     }
     
     delete_student(pStudent);

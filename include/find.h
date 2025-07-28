@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void student_find(FILE* pFile, FILE* pFile_index);
+void student_find(FILE** pFile, FILE** pFile_index);
 
 #endif

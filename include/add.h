@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void student_add(FILE* pFile, FILE* pFile_index);
+void student_add(FILE** pFile, FILE** pFile_index);
 
 #endif

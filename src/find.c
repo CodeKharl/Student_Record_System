@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void student_find(FILE* pFile, FILE* pFile_index){
+void student_find(FILE** pFile, FILE** pFile_index){
     unsigned long id;
     char buffer[256];
     StudentIndex pStd_index;
@@ -16,8 +16,8 @@ void student_find(FILE* pFile, FILE* pFile_index){
     printf("Find Student (Cancel == %d)\n", SECTION_EXIT); 
 
     while((id = input_id()) != SECTION_EXIT){
-        if(!set_stdIndex_by_id(&pStd_index, id, pFile_index) 
-            || !set_std_by_index(pStudent,  &pStd_index, pFile)
+        if(!set_stdIndex_by_id(&pStd_index, id, *pFile_index) 
+            || !set_std_by_index(pStudent,  &pStd_index, *pFile)
         ){
             continue;
         }

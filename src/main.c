@@ -15,19 +15,18 @@
 typedef enum{
     ADD,
     FIND,
-    UPDATE,
     DROP,
     EXIT
 }Menu;
 
 void sys_start(
-    void (*func[SYS_FUNCS_RANGE])(FILE*, FILE*), 
+    void (*func[SYS_FUNCS_RANGE])(FILE**, FILE**), 
     FILE* pStd_file, 
     FILE* pStd_index_file
 );
 
 bool isRunning(
-    void (*func[SYS_FUNCS_RANGE])(FILE*, FILE*), 
+    void (*func[SYS_FUNCS_RANGE])(FILE**, FILE**), 
     FILE* pStd_file, 
     FILE* pStd_index_file
 );
@@ -35,16 +34,16 @@ bool isRunning(
 int main(){
     FILE* pStd_file;
     FILE* pStd_index_file;
-    void (*func[SYS_FUNCS_RANGE])(FILE*, FILE*);
+    void (*func[SYS_FUNCS_RANGE])(FILE**, FILE**);
 
     func[ADD] = student_add;
     func[FIND] = student_find;
     func[DROP] = student_drop;
 
     if(set_ptr_file(&pStd_file, DATA_FILE_PATH, "ab+")
-       && set_ptr_file(&pStd_index_file, DATA_FILE_PATH_INDEX, "ab+")
+       && set_ptr_file(&pStd_index_file, DATA_FILE_INDEX_PATH, "ab+")
     ){
-        puts("Files has been setup\n");
+        puts("Files has been setup.\n");
         sys_start(func, pStd_file, pStd_index_file);
 
         fclose(pStd_file);
@@ -59,7 +58,7 @@ int main(){
 }
 
 void sys_start(
-    void (*func[SYS_FUNCS_RANGE])(FILE*, FILE*), 
+    void (*func[SYS_FUNCS_RANGE])(FILE**, FILE**), 
     FILE* pStd_file, 
     FILE* pStd_index_file
 ){
@@ -67,14 +66,13 @@ void sys_start(
         puts("--> Student Record System <--");
         printf("%d. Add Student\n", ADD);
         printf("%d. Find Student\n", FIND);
-        printf("%d. Update Student\n", UPDATE);
         printf("%d. Drop Student\n", DROP);
         printf("%d. Exit\n", EXIT);
     }while(isRunning(func, pStd_file, pStd_index_file));
 }
 
 bool isRunning(
-    void (*func[SYS_FUNCS_RANGE])(FILE*, FILE*), 
+    void (*func[SYS_FUNCS_RANGE])(FILE**, FILE**), 
     FILE* pStd_file, 
     FILE* pStd_index_file
 ){
@@ -93,7 +91,7 @@ bool isRunning(
             return false;
         }
 
-        func[choice](pStd_file, pStd_index_file);
+        func[choice](&pStd_file, &pStd_index_file);
         return true;
     }
 }
