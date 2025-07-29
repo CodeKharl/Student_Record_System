@@ -107,8 +107,10 @@ static bool is_drop_confirm(StudentIndex* pStd_index, FILE* pStd_file){
     char choice;
     Student* pStudent = new_student();
 
-    printf("\n");
-    print_student(pStudent, STUDENT_LABELED_FORMAT);
+    if(set_std_by_index(pStudent, pStd_index, pStd_file)){
+        printf("\n");
+        print_student(pStudent, STUDENT_LABELED_FORMAT);
+    }else puts("Failed to display student info");
 
     delete_student(pStudent);
 
