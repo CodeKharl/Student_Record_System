@@ -10,43 +10,43 @@
 #include <ctype.h>
 #include <string.h>
 
-static void set_input_student(Student* pStudent, FILE* pFile, FILE* pFile_index);
-static unsigned long new_std_id(FILE* pFile, FILE* pFile_index);
+static void set_input_student(Student* pStudent, FILE* pStd_file, FILE* pStd_index_file);
+static unsigned long new_std_id(FILE* pStd_file, FILE* pStd_index_file);
 static bool is_confirm(Student* pStudent);
-static void write_student(FILE* pFile, FILE* pFile_index, Student* pStudent);
-static bool write_student_index(StudentIndex* pStdIndex, FILE* pFile_index);
-static bool fwrite_chars(char* p, FILE* pFile);
+static void write_student(FILE* pStd_file, FILE* pStd_index_file, Student* pStudent);
+static bool write_student_index(StudentIndex* pStd_index, FILE* pStd_index_file);
+static bool fwrite_chars(char* pStr, FILE* pStd_file);
 
-void student_add(FILE** pFile, FILE** pFile_index){
+void student_add(FILE** pStd_file, FILE** pStd_index_file){
     puts("\nAdd Student");
 
     Student* pStudent = new_student();
     if(!is_allocated(pStudent)) return;
 
-    set_input_student(pStudent, *pFile, *pFile_index);
+    set_input_student(pStudent, *pStd_file, *pStd_index_file);
 
     if(is_confirm(pStudent)){
-        write_student(*pFile, *pFile_index, pStudent);
+        write_student(*pStd_file, *pStd_index_file, pStudent);
     }
     
     delete_student(pStudent);
 }
 
-static void set_input_student(Student* pStudent, FILE* pFile, FILE* pFile_index){
+static void set_input_student(Student* pStudent, FILE* pStd_file, FILE* pStd_index_file){
     pStudent->name = input_name(MAX_NAME_SIZE);
     pStudent->age = input_age();
     pStudent->sex = input_sex();
     pStudent->address = input_address(MAX_ADDRESS_SIZE);
     pStudent->contact_number = input_contact_num(MAX_CONTACT_NUM_SIZE);
-    pStudent->id = new_std_id(pFile, pFile_index);
+    pStudent->id = new_std_id(pStd_file, pStd_index_file);
 }
 
-static unsigned long new_std_id(FILE* pFile, FILE* pFile_index){
+static unsigned long new_std_id(FILE* pStd_file, FILE* pStd_index_file){
     StudentIndex last_stdIndex;
 
     puts("\nCreating new ID...");
 
-    if(set_last_stdIndex(&last_stdIndex, pFile_index)){
+    if(set_last_stdIndex(&last_stdIndex, pStd_index_file)){
         return last_stdIndex.id + 1;
     }
 
@@ -80,34 +80,34 @@ static bool is_confirm(Student* pStudent){
     }
 }
 
-static void write_student(FILE* pFile, FILE* pFile_index, Student* pStudent){
+static void write_student(FILE* pStd_file, FILE* pStd_index_file, Student* pStudent){
     StudentIndex stdIndex;
 
     stdIndex.id = pStudent->id;
-    stdIndex.offset = ftell(pFile);
+    stdIndex.offset = ftell(pStd_file);
 
-    if(!write_student_index(&stdIndex, pFile_index)){
+    if(!write_student_index(&stdIndex, pStd_index_file)){
         return;
     }
 
-    fwrite(&pStudent->id, sizeof(pStudent->id), 1, pFile);
-    fwrite(&pStudent->age, sizeof(pStudent->age), 1, pFile);
-    fwrite(&pStudent->sex, sizeof(pStudent->sex), 1, pFile);
+    fwrite(&pStudent->id, sizeof(pStudent->id), 1, pStd_file);
+    fwrite(&pStudent->age, sizeof(pStudent->age), 1, pStd_file);
+    fwrite(&pStudent->sex, sizeof(pStudent->sex), 1, pStd_file);
     
-    if(fwrite_chars(pStudent->name, pFile)
-        && fwrite_chars(pStudent->address, pFile)
-        && fwrite_chars(pStudent->contact_number, pFile)
+    if(fwrite_chars(pStudent->name, pStd_file)
+        && fwrite_chars(pStudent->address, pStd_file)
+        && fwrite_chars(pStudent->contact_number, pStd_file)
     ){
-        puts("The new student was added successfully!\n");
-    }else puts("Failed to add the student\n");
+        puts("The new student was added successfully.\n");
+    }else puts("Failed to add the student!\n");
 
 
-    fflush(pFile);
-    fflush(pFile_index);
+    fflush(pStd_file);
+    fflush(pStd_index_file);
 }
 
-static bool write_student_index(StudentIndex* pStdIndex, FILE* pFile_index){
-    if(fwrite(pStdIndex, sizeof(StudentIndex), 1, pFile_index) != 1){
+static bool write_student_index(StudentIndex* pStdIndex, FILE* pStd_index_file){
+    if(fwrite(pStdIndex, sizeof(StudentIndex), 1, pStd_index_file) != 1){
         puts("Failed to save student index.");
 
         return false;
@@ -116,9 +116,9 @@ static bool write_student_index(StudentIndex* pStdIndex, FILE* pFile_index){
     return true;
 }
 
-static bool fwrite_chars(char* p, FILE* pFile){
+static bool fwrite_chars(char* p, FILE* pStd_file){
     size_t len = strlen(p) + 1;
 
-    return fwrite(&len, sizeof(len), 1, pFile) == 1
-        && fwrite(p, sizeof(char), len, pFile) == len;
+    return fwrite(&len, sizeof(len), 1, pStd_file) == 1
+        && fwrite(p, sizeof(char), len, pStd_file) == len;
 }

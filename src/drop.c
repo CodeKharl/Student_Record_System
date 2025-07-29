@@ -53,18 +53,14 @@ static bool delete_std_index(
 
     if(!is_allocated(pTemp_file) 
         || is_file_empty(pStd_index_file, DATA_FILE_INDEX_PATH)
+        || !write_temp_file(id, pTemp_file, pStd_index_file, pStd_file)
     ){
-        puts("Failed to find the student due to setup error!");
-        return false;
-    }
-
-    if(!write_temp_file(id, pTemp_file, pStd_index_file, pStd_file)){
         puts("Failed to drop the student");
         
         fclose(pTemp_file);
         remove(DATA_TEMP_FILE_PATH);
 
-        return false;
+        return false;       
     }
 
     fclose(pTemp_file);

@@ -1,5 +1,3 @@
-#include "memory_util.h"
-#include "student.h"
 #include "input.h"
 #include "add.h"
 #include "find.h"
@@ -7,7 +5,6 @@
 #include "file_util.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 #define SYS_FUNCS_RANGE 4
@@ -82,7 +79,7 @@ bool isRunning(
         choice = get_input_int("Enter your choice : ");
         
         if(choice < ADD || choice > EXIT){
-            puts("Invalid input! Please enter valid choice");
+            puts("Invalid input! Please enter valid choice.");
             continue;
         }
 
