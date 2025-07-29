@@ -5,6 +5,7 @@
 #include "sys_util.h"
 #include "file_util.h"
 #include "input.h"
+#include "student_util.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -104,15 +105,10 @@ static bool write_temp_file(
 
 static bool is_drop_confirm(StudentIndex* pStd_index, FILE* pStd_file){
     char choice;
-    char buffer[256];
     Student* pStudent = new_student();
 
-    if(is_allocated(pStudent) 
-        && set_std_by_index(pStudent, pStd_index, pStd_file)
-        && set_student_str(buffer, pStudent, STUDENT_LABELED_FORMAT)
-    ){
-        printf("\n%s\n\n", buffer);
-    }else puts("Failed to print student info");
+    printf("\n");
+    print_student(pStudent, STUDENT_LABELED_FORMAT);
 
     delete_student(pStudent);
 

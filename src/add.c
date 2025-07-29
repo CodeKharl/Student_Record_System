@@ -2,6 +2,8 @@
 #include "student.h"
 #include "memory_util.h"
 #include "input.h"
+#include "student_util.h"
+#include "sys_util.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -57,21 +59,17 @@ static unsigned long new_std_id(FILE* pStd_file, FILE* pStd_index_file){
 
 static bool is_confirm(Student* pStudent){
     char choice;
-    char buffer[256];
 
-    memset(buffer, 0, sizeof(buffer));
-
-    if(!set_student_str(buffer, pStudent, STUDENT_LABELED_FORMAT)){
-        puts("\nFailed to display the student info.");
-    }else printf("\n%s\n", buffer);
+    printf("\n");
+    print_student(pStudent, STUDENT_LABELED_FORMAT);
 
     while(1){
         choice = get_input_char("\nContinue to add this student (Y/N): ");
 
         switch(toupper(choice)){
-            case 'Y':
+            case YES:
                 return true;
-            case 'N':
+            case NO:
                 return false;
             default:
                 puts("Invalid choice!");

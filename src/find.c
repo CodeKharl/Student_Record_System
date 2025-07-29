@@ -1,13 +1,12 @@
 #include "student.h"
 #include "sys_util.h"
 #include "memory_util.h"
+#include "student_util.h"
 
 #include <stdio.h>
-#include <string.h>
 
 void student_find(FILE** pStd_file, FILE** pStd_index_file){
     unsigned long id;
-    char buffer[256];
     StudentIndex pStd_index;
     Student* pStudent = new_student();
 
@@ -22,14 +21,8 @@ void student_find(FILE** pStd_file, FILE** pStd_index_file){
             continue;
         }
         
-        memset(buffer, 0, sizeof(buffer));
-
-        if(!set_student_str(buffer, pStudent, STUDENT_LABELED_FORMAT)){
-            puts("Failed to print the student info");
-            continue;
-        }
-
-        printf("\n%s\n\n", buffer);
+        printf("\n");
+        print_student(pStudent, STUDENT_LABELED_FORMAT);
     }
 
     delete_student(pStudent);

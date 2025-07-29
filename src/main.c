@@ -10,7 +10,7 @@
 #define SYS_FUNCS_RANGE 4
 
 typedef enum{
-    ADD,
+    ADD = 1,
     FIND,
     DROP,
     EXIT
