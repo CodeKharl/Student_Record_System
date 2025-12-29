@@ -5,7 +5,7 @@ SRCDIR = src
 BUILDIR = build
 BINDIR = bin
 
-TARGET = $(BINDIR)/SRS.exe
+TARGET = $(BINDIR)/SRS
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(patsubst $(SRCDIR)/%.c, $(BUILDIR)/%.o, $(SOURCES))
