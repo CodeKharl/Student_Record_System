@@ -6,7 +6,6 @@
 #include "file_util.h"
 #include "input.h"
 #include "student_util.h"
-
 #include <stdio.h>
 #include <stdbool.h>
 #include <ctype.h>
