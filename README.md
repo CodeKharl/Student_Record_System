@@ -1,4 +1,4 @@
-# Student Manager (C)
+# Student Record System (C)
 
 A simple C program that records student information.  
 The program supports adding, finding, and dropping students, with data stored persistently on disk.
@@ -26,7 +26,6 @@ The project uses a structured build layout created during compilation:
 ├── Makefile
 └── README.md
 
-
 - **bin/** contains the executable after a successful build
 - **build/** contains intermediate object files
 - **data/** contains files used to store student records
@@ -46,6 +45,7 @@ All directories are created automatically during the build process.
 ## Build Instructions
 
 ### Standard build
+
 make
 
 After building, the executable can be found in:
@@ -98,4 +98,3 @@ Notes
     The data format and storage method can be easily extended or replaced
 
     Bear or similar tools are recommended for code analysis and editor integration
-
