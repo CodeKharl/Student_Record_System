@@ -18,17 +18,19 @@ The program supports adding, finding, and dropping students, with data stored pe
 
 The project uses a structured build layout created during compilation:
 
+```
 .
-├── bin/ # Final executable
-├── build/ # Object files (.o)
-├── data/ # Student data files (.data)
-├── src/ # Source code
+├── bin/        # Final executable
+├── build/      # Object files (.o)
+├── data/       # Student data files (.data)
+├── src/        # Source code
 ├── Makefile
 └── README.md
+```
 
-- **bin/** contains the executable after a successful build
-- **build/** contains intermediate object files
-- **data/** contains files used to store student records
+- **bin/** — contains the executable after a successful build
+- **build/** — contains intermediate object files
+- **data/** — contains files used to store student records
 
 All directories are created automatically during the build process.
 
@@ -44,57 +46,64 @@ All directories are created automatically during the build process.
 
 ## Build Instructions
 
-### Standard build
+### Standard Build
 
+```bash
 make
+```
 
-After building, the executable can be found in:
+After building, the executable can be found in `bin/`.
 
-bin/
-
-Build with compile_commands.json
+### Build with `compile_commands.json`
 
 To enable code checking, static analysis, or IDE support (e.g., clangd), use Bear:
 
+```bash
 bear -- make
+```
 
-This generates a compile_commands.json file in the project root.
-Running the Program
+This generates a `compile_commands.json` file in the project root.
 
+---
+
+## Running the Program
+
+```bash
 ./bin/SRS
+```
 
 The program will display a menu allowing you to:
 
-    Add a student
+1. Add a student
+2. Find a student
+3. Drop a student
+4. Exit
 
-    Find a student
+---
 
-    Drop a student
+## Data Storage
 
-    Exit
+- Student records are stored in the `data/` directory
+- Data is kept in `.data` files so records persist between runs
 
-Data Storage
+---
 
-    Student records are stored in the data/ directory
+## Cleaning the Project
 
-    Data is kept in .data files so records persist between runs
-
-Cleaning the Project
-
+```bash
 make clean
+```
 
 This removes:
 
-    Executable files
+- Executable files
+- Object files
+- Stored `.data` files
 
-    Object files
+---
 
-    Stored .data files
+## Notes
 
-Notes
-
-    This project is intended for learning and demonstration purposes
-
-    The data format and storage method can be easily extended or replaced
-
-    Bear or similar tools are recommended for code analysis and editor integration
+- This project is intended for learning and demonstration purposes
+- The data format and storage method can be easily extended or replaced
+- Bear or similar tools are recommended for code analysis and editor integration
